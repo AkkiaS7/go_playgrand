@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package person;
+
+option go_package = "pb_test/pb/person;person";
+
+import "pb/home/home.proto";
+
+// 这是单行注释
+/*
+这是一个多行注释
+ */
+
+message Home{
+  repeated Person persons = 1; // 嵌套
+  message V {
+    string name = 1;
+  }
+  V v = 2;
+}
+
+message Person{
+  string name = 1;
+  int32 age = 2;
+  enum SEX{
+    option allow_alias = true;
+    MAN = 0;
+    WOMAN = 1;
+    GIRL = 1;
+    OTHER = 2;
+  }
+  SEX sex = 3; // 枚举类型
+  repeated string test = 4; // 数组
+
+  reserved "test_map"; // 保留名字
+  reserved 5; // 保留值
+
+  oneof TestOneOf{
+    string one = 6;
+    string two = 7;
+    string three =8;
+  }
+
+  home.Home home = 9; // 外部引用
+}
+
+service SearchService{
+  rpc Search(Person) returns(Person); // 传统的 即刻相应
+  rpc SearchIn(stream Person) returns(Person); // 入参为流
+  rpc SearchOut(Person) returns(stream Person); // 出参为流
+  rpc SearchIO(stream Person) returns(stream Person); // 出入均为流
+}

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"google.golang.org/grpc"
-	hello_grpc "grpc_test/pb"
+	hello_grpc "hello_world/pb"
 )
 
 func main() {
