@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package person;
+
+option go_package = "grpcServer/pb/person;person";
+
+
+import "google/api/annotations.proto";
+
+// 这是单行注释
+/*
+这是一个多行注释
+*/
+
+message PersonReq{
+  string name = 1;
+  int32 age = 2;
+}
+
+message PersonRes{
+  string name = 1;
+  int32 age = 2;
+}
+
+service SearchService{
+  rpc Search(PersonReq) returns(PersonRes){
+    option (google.api.http) = {
+      post: "/api/person"
+      body: "*"
+    };
+  }
+}
